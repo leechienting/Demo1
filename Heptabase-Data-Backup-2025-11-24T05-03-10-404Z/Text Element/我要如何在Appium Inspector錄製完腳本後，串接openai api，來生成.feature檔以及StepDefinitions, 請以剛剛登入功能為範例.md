@@ -1,0 +1,1 @@
+我要如何在Appium Inspector錄製完腳本後，串接openai api，來生成.feature檔以及StepDefinitions, 請以剛剛登入功能為範例

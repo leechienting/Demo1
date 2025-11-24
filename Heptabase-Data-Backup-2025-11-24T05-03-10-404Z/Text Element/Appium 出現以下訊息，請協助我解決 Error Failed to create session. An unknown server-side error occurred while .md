@@ -1,0 +1,2 @@
+Appium 出現以下訊息，請協助我解決 \
+Error Failed to create session. An unknown server-side error occurred while processing the command. Original error: Unable to launch WebDriverAgent because of xcodebuild failure: xcodebuild failed with code 65 xcodebuild error message:

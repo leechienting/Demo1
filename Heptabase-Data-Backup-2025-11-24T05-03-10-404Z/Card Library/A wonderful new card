@@ -1,0 +1,38 @@
+
+
+# 執行測試
+
+- Server 已開啟
+
+   ![chientinglee\_—\_node__usr_local_bin_appium\_—\_110×38\_和\_Heptabase.png.jpg](./A%20wonderful%20new%20card-assets/chientinglee_—_node__usr_local_bin_appium_—_110×38_和_Heptabase.png.jpg)
+
+- 確認模擬器上的**WDA App**已在背景執行：
+
+   ![iPhone_15_Pro.png.jpg](./A%20wonderful%20new%20card-assets/iPhone_15_Pro.png.jpg)
+
+- 執行 **Appium Inspector**
+
+   ![Appium_Inspector.png.jpg](./A%20wonderful%20new%20card-assets/Appium_Inspector.png.jpg)
+
+   - appium:udid 查詢介面
+
+      ![陳羣元\_\_私訊\_\_-\_SKBank\_數位金融\_-\_Slack.png.jpg](./A%20wonderful%20new%20card-assets/陳羣元__私訊__-_SKBank_數位金融_-_Slack.png.jpg)
+
+- Android Studio
+
+   - 方法一：終端機：鍵入**./gradlew clean build**
+
+   - 另外一種
+
+      ```plain
+      ./gradlew clean test -Dplatform=android
+      ./gradlew clean test -Dplatform=ios
+      ```
+
+   ![AppiumTest\_–\_cucumber-report_html__AppiumTest\_.png.jpg](./A%20wonderful%20new%20card-assets/AppiumTest_–_cucumber-report_html__AppiumTest_.png.jpg)
+
+   - 方法二：直接執行feature檔
+
+      ![AppiumTest\_–\_cucumber-report_html__AppiumTest\_.png.jpg](./A%20wonderful%20new%20card-assets/AppiumTest_–_cucumber-report_html__AppiumTest_.png.jpg)
+
+- 
