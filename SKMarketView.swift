@@ -97,6 +97,7 @@ class SKMarketView: UIView {
     private func applyTheme() {
         let current = Theme.shard.current
         self.lblTitle.textColor = current.Color_SpaceGray1_CalmBlue7
+        self.lblTitle.text = "abc"
     }
     
     private func bindView() {
