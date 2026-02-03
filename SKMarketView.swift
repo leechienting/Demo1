@@ -124,4 +124,8 @@ class SKMarketView: UIView {
             .bind(to: self.tapCellRelay)
             .disposed(by: self.bag)
     }
+
+    public func helloWorld() {
+        print("Hello World")
+    }
 }
