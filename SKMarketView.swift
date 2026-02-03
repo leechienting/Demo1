@@ -22,8 +22,16 @@ class SKMarketView: UIView {
     public lazy var marketDataRelay: PublishRelay<[SKMarketSection]> = PublishRelay()
     
     public var tapCellRelay = PublishRelay<MarketViewType>()
-    
+
     private let cellIdentifier = "SKMarketCell"
+
+    // MARK: - Layout Constants
+    private let estimatedCellHeight: CGFloat = 98
+    private let horizontalPadding: CGFloat = 16
+    private let titleHeight: CGFloat = 24
+    private let titleTrailingPadding: CGFloat = 21
+    private let titleBottomSpacing: CGFloat = 16
+    private let tableViewInitialHeight: CGFloat = 1
     
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<SKMarketSection>{
         dataSource, tableView, indexPath, element in
@@ -45,7 +53,7 @@ class SKMarketView: UIView {
     public lazy var tbViewList: UITableView = {
         let tbView = UITableView()
         tbView.register(SKMarketCell.self, forCellReuseIdentifier: cellIdentifier)
-        tbView.estimatedRowHeight = 98
+        tbView.estimatedRowHeight = self.estimatedCellHeight
         tbView.bounces = false
         tbView.separatorStyle = .none
         tbView.isScrollEnabled = false
@@ -83,15 +91,15 @@ class SKMarketView: UIView {
     }
     
     private func setupLayout() {
-        
+
         self.layout(
             0,
-            |-16⁃self.lblTitle.height(24)⁃21-|,
-            16,
-            |-0⁃self.tbViewList.height(1)⁃0-|,
+            |-self.horizontalPadding⁃self.lblTitle.height(self.titleHeight)⁃self.titleTrailingPadding-|,
+            self.titleBottomSpacing,
+            |-0⁃self.tbViewList.height(self.tableViewInitialHeight)⁃0-|,
             0
         )
-        
+
     }
     
     private func applyTheme() {
