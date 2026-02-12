@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>范姜雅藍 Bona | 數位金融產品經理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1e3a5f;
+            --secondary-color: #2c5282;
+            --accent-color: #4a90e2;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        /* 導航列 */
+        nav {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* 漢堡選單按鈕 */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* Hero 區域 */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* 內容區域 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-color);
+            font-weight: 700;
+        }
+
+        /* 卡片樣式 */
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .card-subtitle {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .card-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .card-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card-content li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.7rem;
+            position: relative;
+        }
+
+        .card-content li::before {
+            content: "▸";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* 技能網格 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .skill-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 0.4rem 0;
+            color: var(--text-dark);
+        }
+
+        /* 核心優勢區域 */
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .strength-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .strength-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .strength-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* 證照標籤 */
+        .certificates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cert-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            /* 導航列手機版 */
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--primary-color);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+
+            .nav-links.active {
+                max-height: 300px;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* Hero 區域手機版 */
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            .hero .tagline {
+                font-size: 0.95rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .contact-item {
+                font-size: 0.9rem;
+            }
+
+            /* 內容區域手機版 */
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            section {
+                margin-bottom: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            /* 卡片手機版 */
+            .card {
+                padding: 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .card-subtitle {
+                font-size: 1rem;
+            }
+
+            .card-content h4 {
+                font-size: 1rem;
+            }
+
+            .card-content li {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            /* 網格手機版 */
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .skill-card {
+                padding: 1.25rem;
+            }
+
+            .skill-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .strengths-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .strength-item {
+                padding: 1.25rem;
+            }
+
+            .strength-item h3 {
+                font-size: 1.1rem;
+            }
+
+            .strength-item p {
+                font-size: 0.9rem;
+            }
+
+            /* 證照標籤手機版 */
+            .cert-badge {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* 更小螢幕優化 */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .hero .tagline {
+                font-size: 0.85rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* 滾動動畫 */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .fade-in.animate {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 頁尾 */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航列 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">范姜雅藍 Bona</div>
+            <button class="menu-toggle" aria-label="開啟選單">☰</button>
+            <ul class="nav-links">
+                <li><a href="#about">關於我</a></li>
+                <li><a href="#experience">工作經歷</a></li>
+                <li><a href="#skills">專業技能</a></li>
+                <li><a href="#education">學歷與證照</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero 區域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>范姜雅藍 (Bona)</h1>
+            <p class="subtitle">數位金融產品經理 | 專案管理專家</p>
+            <p class="tagline">10+ 年專案管理經驗，專精於數位平台整合、APP/網頁開發、跨部門溝通協作，致力於創造最佳客戶體驗與數位創新</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>charlotte9388@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>0919-301-914</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>台北市</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要內容 -->
+    <div class="container">
+        <!-- 核心優勢 -->
+        <section id="about" class="fade-in">
+            <h2 class="section-title">核心優勢</h2>
+            <div class="strengths-grid">
+                <div class="strength-item">
+                    <h3>🎯 趨勢敏銳與問題解決能力</h3>
+                    <p>對金融科技（Fintech）發展具高度敏銳度，能迅速掌握產業動態，並提出具可行性與創新性的解決方案。</p>
+                </div>
+                <div class="strength-item">
+                    <h3>📱 產品與專案雙重視角</h3>
+                    <p>擁有數位金融產品從需求定義、技術導入至上市的全流程經驗，結合專案管理實戰能力，能有效整合創新技術與市場需求。</p>
+                </div>
+                <div class="strength-item">
+                    <h3>🤝 跨部門溝通協作力</h3>
+                    <p>具備在高壓環境中穩定推動專案的能力，能主動整合內外部資源，促進跨部門協作，確保專案依時如質上線。</p>
+                </div>
+                <div class="strength-item">
+                    <h3>🌱 持續學習與永續意識</h3>
+                    <p>積極進修永續金融相關知識，已考取「永續發展基礎證照」並參與「永續報告師」、「永續碳盤查師」實務課程。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工作經歷 -->
+        <section id="experience" class="fade-in">
+            <h2 class="section-title">工作經歷</h2>
+
+            <!-- 新光銀行 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">臺灣新光商業銀行</h3>
+                        <p class="card-subtitle">資深襄理 - 數位平台科</p>
+                    </div>
+                    <div class="card-meta">2023/05 - 現在</div>
+                </div>
+                <div class="card-content">
+                    <p><strong>主要職責：</strong>負責行動銀行與官網功能評估、進度追蹤、測試與客訴案處理</p>
+                    <h4 style="margin-top: 1rem; color: var(--secondary-color);">重點專案：</h4>
+                    <ul>
+                        <li><strong>三網一體專案：</strong>整合新官網、新行動銀行及AEM線上申辦平台，打造One Bank數位平台</li>
+                        <li>負責新官網專案排程、上線與維運規劃</li>
+                        <li>協調官網廠商、週邊系統串接，確保前後端整合順利</li>
+                        <li>透過數據分析提出官網優化功能，提升用戶體驗</li>
+                        <li><strong>金金合併（台新金*新光金）：</strong>盤點雙方官網平台架構差異、整合需求規格、追蹤開發排程</li>
+                    </ul>
+                    <h4 style="margin-top: 1rem; color: var(--accent-color);">專案成果：</h4>
+                    <ul>
+                        <li>成功協助新官網平台如期完成上線，整合前後端系統</li>
+                        <li>金金合併期間有效協調資源與時程，促進官網平台順利整併</li>
+                        <li>強化跨部門溝通能力、系統整合邏輯與數位平台營運實務經驗</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 台北富邦銀行 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">台北富邦商業銀行</h3>
+                        <p class="card-subtitle">襄理 - 數位平台科</p>
+                    </div>
+                    <div class="card-meta">2021/09 - 2023/04</div>
+                </div>
+                <div class="card-content">
+                    <p><strong>主要職責：</strong>負責投資產品及信用卡業務的規劃、開發溝通、測試與客訴案處理</p>
+                    <h4 style="margin-top: 1rem; color: var(--secondary-color);">重點專案：</h4>
+                    <ul>
+                        <li><strong>投資項目：</strong>金錢信託、基金功能開發、基金好神選大改版、投資競品分析</li>
+                        <li><strong>信用卡項目：</strong>綠色行動帳單、好事多卡功能推行、幣別折抵（4個月內完成）、碳足跡功能、LINE帳單通知</li>
+                        <li><strong>金金合併（日盛）：</strong>盤點信用卡及投資差異、整合功能、開發動態鎖利</li>
+                    </ul>
+                    <h4 style="margin-top: 1rem; color: var(--accent-color);">專案成果：</h4>
+                    <ul>
+                        <li>所負責專案皆於時程內順利上線</li>
+                        <li>跨部門溝通協調能力強，能迅速釐清系統問題並提出解決方案</li>
+                        <li>主管評價：「專案回報精準，對於系統問題具備深入了解與解決能力，危機處理能力佳」</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 三竹資訊 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">三竹資訊股份有限公司</h3>
+                        <p class="card-subtitle">專案主任</p>
+                    </div>
+                    <div class="card-meta">2019/05 - 2021/07</div>
+                </div>
+                <div class="card-content">
+                    <p><strong>主要職責：</strong>負責銀行客製化網銀及APP行動網銀服務UX/UI及功能整合開發（敏捷/瀑布式）</p>
+                    <h4 style="margin-top: 1rem; color: var(--secondary-color);">重點專案：</h4>
+                    <ul>
+                        <li><strong>臺灣銀行：</strong>網行銀功能開發（台電繳費、跨行轉帳備註、稅務系統、資安議題、無障礙網銀規劃）</li>
+                        <li>新網行銀規劃：撰寫規格書、與臺銀電金及資訊單位需求訪談溝通</li>
+                        <li><strong>財金資訊：</strong>「全國繳費網」API串接、台電繳費、無障礙APP規劃</li>
+                    </ul>
+                    <h4 style="margin-top: 1rem; color: var(--accent-color);">專案成果：</h4>
+                    <ul>
+                        <li>主動分析風險並與客戶溝通調整時程，確保專案持續推進</li>
+                        <li>人力短缺期間彈性調配資源，協助多項專案準時上線</li>
+                        <li>強化「跨部門協作」、「需求整合與時程控管」等實戰能力</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ASUSTOR -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">Asustor科技</h3>
+                        <p class="card-subtitle">資深專案經理</p>
+                    </div>
+                    <div class="card-meta">2016/01 - 2018/12</div>
+                </div>
+                <div class="card-content">
+                    <p><strong>主要職責：</strong>私有雲網路儲存裝置（NAS）產品設計與平台整合，協調跨部門工程團隊推動專案落地</p>
+                    <h4 style="margin-top: 1rem; color: var(--secondary-color);">重點專案：</h4>
+                    <ul>
+                        <li>整合 NAS ADM 3.0 系統平台、IHM HD 檢測工具、DOCKER</li>
+                        <li><strong>MY Cloud 個人雲端產品：</strong>獨立規劃UX/UI架構、設計產品操作邏輯、與前後端韌體團隊協作</li>
+                        <li>負責國內外市場競品分析與定位策略制定</li>
+                    </ul>
+                    <h4 style="margin-top: 1rem; color: var(--accent-color);">專案成果：</h4>
+                    <ul>
+                        <li>成功完成ADM升級至3.0版本</li>
+                        <li>主導MyCloud雲端新產品開發，具從零到一的產品落地經驗</li>
+                        <li>培養跨部門溝通、產品需求整合、專案進度掌控能力</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 其他經歷摺疊卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">更多經歷</h3>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;">
+                            <strong>醬子科技</strong> - 專案經理 (2015/03 - 2015/12)<br>
+                            <span style="color: var(--text-light);">負責APP開發專案，服務中華電信、長榮航空、元大金控等客戶</span>
+                        </li>
+                        <li style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0;">
+                            <strong>智冠科技</strong> - 專案管理 (2012/09 - 2015/03)<br>
+                            <span style="color: var(--text-light);">負責MYFUN媒體社群網站及APP開發，FREE MY CARD帶來50%收益</span>
+                        </li>
+                        <li>
+                            <strong>特波國際</strong> - 規劃管理師 (2007/07 - 2012/08)<br>
+                            <span style="color: var(--text-light);">新產品開發、虛擬社群遊戲腳本設計、製作19門E-Learning課程</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 專業技能 -->
+        <section id="skills" class="fade-in">
+            <h2 class="section-title">專業技能</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>💼 專案管理</h3>
+                    <ul>
+                        <li>敏捷開發（Agile）</li>
+                        <li>瀑布式開發</li>
+                        <li>跨部門協作與溝通</li>
+                        <li>需求分析與規格撰寫</li>
+                        <li>進度控管與風險管理</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>🎨 產品設計</h3>
+                    <ul>
+                        <li>UX/UI 規劃與設計</li>
+                        <li>使用者體驗優化</li>
+                        <li>競品分析</li>
+                        <li>產品策略制定</li>
+                        <li>數據驅動決策</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>💻 技術能力</h3>
+                    <ul>
+                        <li>APP/網頁開發流程</li>
+                        <li>前後端系統整合</li>
+                        <li>API串接規劃</li>
+                        <li>PHP、MySQL</li>
+                        <li>Adobe系列軟體</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>🏦 金融領域</h3>
+                    <ul>
+                        <li>數位銀行平台</li>
+                        <li>投資理財產品</li>
+                        <li>信用卡業務</li>
+                        <li>金融科技趨勢</li>
+                        <li>永續金融</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 學歷與證照 -->
+        <section id="education" class="fade-in">
+            <h2 class="section-title">學歷與證照</h2>
+
+            <div class="card">
+                <h3 class="card-title">學歷背景</h3>
+                <div class="card-content">
+                    <ul>
+                        <li><strong>國立清華大學</strong> - 數位學習科技研究所碩士 (2010/09 - 2012/06)</li>
+                        <li><strong>德明行技術學院</strong> - 資訊科技系學士 (2002/09 - 2006/06)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">專業證照</h3>
+                <div class="certificates">
+                    <span class="cert-badge">永續發展基礎能力</span>
+                    <span class="cert-badge">銀行內部控制與內部稽核</span>
+                    <span class="cert-badge">金融市場常識與職業道德</span>
+                </div>
+                <div class="card-content" style="margin-top: 1.5rem;">
+                    <p style="color: var(--text-light);">並參與「永續報告師」、「永續碳盤查師」實務課程</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">語言能力</h3>
+                <div class="card-content">
+                    <ul>
+                        <li><strong>中文：</strong>母語</li>
+                        <li><strong>英文：</strong>中等</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+        <p>&copy; 2026 范姜雅藍 Bona. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Built with passion for digital innovation</p>
+    </footer>
+
+    <!-- JavaScript 滾動動畫 -->
+    <script>
+        // 漢堡選單功能
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // 點擊選單項目後關閉選單
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                menuToggle.textContent = '☰';
+            });
+        });
+
+        // 點擊外部區域關閉選單
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('nav')) {
+                navLinks.classList.remove('active');
+                menuToggle.textContent = '☰';
+            }
+        });
+
+        // 滾動動畫（可選，如果瀏覽器支援）
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

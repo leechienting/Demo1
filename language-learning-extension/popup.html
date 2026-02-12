@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 語言學習助手</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 450px;
+      min-height: 400px;
+      max-height: 600px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      background: #f7fafc;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .tabs {
+      display: flex;
+      background: white;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #718096;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      background: #f7fafc;
+    }
+
+    .tab.active {
+      color: #4a90e2;
+      border-bottom: 3px solid #4a90e2;
+    }
+
+    .content {
+      padding: 16px;
+      max-height: 450px;
+      overflow-y: auto;
+    }
+
+    .content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .content::-webkit-scrollbar-thumb {
+      background: #4a90e2;
+      border-radius: 10px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* 設定面板 */
+    .setting-group {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .setting-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .setting-group input,
+    .setting-group select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .setting-group input:focus,
+    .setting-group select:focus {
+      outline: none;
+      border-color: #4a90e2;
+    }
+
+    .setting-group small {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #718096;
+    }
+
+    .save-settings-btn {
+      width: 100%;
+      padding: 12px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .save-settings-btn:hover {
+      background: #357abd;
+    }
+
+    .status-message {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .status-message.success {
+      background: #c6f6d5;
+      color: #22543d;
+      display: block;
+    }
+
+    .status-message.error {
+      background: #fed7d7;
+      color: #742a2a;
+      display: block;
+    }
+
+    /* 單字表 */
+    .vocab-controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .vocab-controls button {
+      padding: 8px 16px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vocab-controls button:hover {
+      background: #f7fafc;
+      border-color: #4a90e2;
+    }
+
+    .vocab-item {
+      background: white;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .vocab-word {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+
+    .vocab-explanation {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #4a5568;
+      margin-bottom: 8px;
+    }
+
+    .vocab-meta {
+      font-size: 11px;
+      color: #a0aec0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: #e53e3e;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .delete-btn:hover {
+      background: #fed7d7;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #a0aec0;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .empty-state-text {
+      font-size: 14px;
+    }
+
+    .vocab-count {
+      font-size: 12px;
+      color: #718096;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎓 AI 語言學習助手</h1>
+    <p>選取文字即可獲得智能解釋</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="vocabulary">📚 單字表</button>
+    <button class="tab" data-tab="settings">⚙️ 設定</button>
+  </div>
+
+  <div class="content">
+    <!-- 單字表面板 -->
+    <div id="vocabulary" class="tab-panel active">
+      <div class="vocab-controls">
+        <button id="exportBtn">📥 匯出</button>
+        <button id="clearBtn">🗑️ 清空</button>
+      </div>
+      <div class="vocab-count" id="vocabCount"></div>
+      <div id="vocabularyList"></div>
+    </div>
+
+    <!-- 設定面板 -->
+    <div id="settings" class="tab-panel">
+      <div class="setting-group">
+        <label for="apiKey">Anthropic API Key</label>
+        <input type="password" id="apiKey" placeholder="sk-ant-...">
+        <small>
+          取得 API Key：前往
+          <a href="https://console.anthropic.com/" target="_blank" style="color: #4a90e2;">console.anthropic.com</a>
+        </small>
+      </div>
+
+      <div class="setting-group">
+        <label for="targetLanguage">解釋語言</label>
+        <select id="targetLanguage">
+          <option value="繁體中文">繁體中文</option>
+          <option value="簡體中文">簡體中文</option>
+          <option value="English">English</option>
+          <option value="日本語">日本語</option>
+          <option value="한국어">한국어</option>
+        </select>
+      </div>
+
+      <button class="save-settings-btn" id="testApiBtn" style="background: #48bb78; margin-bottom: 8px;">🔍 測試 API Key</button>
+      <button class="save-settings-btn" id="saveSettingsBtn">💾 儲存設定</button>
+      <div class="status-message" id="statusMessage"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
